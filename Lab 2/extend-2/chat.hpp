@@ -31,6 +31,7 @@ enum StatusCode
     SYSTEM = 103,
     SUCCESS = 200,
     FAIL = 201,
+    BUSY = 202,
     BAD_REQUEST = 400
 };
 
@@ -38,7 +39,7 @@ enum StatusCode
 // serverMessage parseServerJson(const std::string &jsonStr);
 std::optional<clientMessage> receiveClientMessage(SOCKET sock);
 std::optional<serverMessage> receiveServerMessage(SOCKET sock);
-void sendClientMessage(SOCKET sock, const clientMessage &msg);
+int sendClientMessage(SOCKET sock, const clientMessage &msg);
 void sendServerMessage(SOCKET sock, const serverMessage &msg);
 bool sendFile(SOCKET sock, const std::string &filePath);
 bool receiveFile(SOCKET sock, const std::string &filename, size_t fileSize);

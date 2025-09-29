@@ -13,6 +13,8 @@
 #include "chat.hpp"
 
 #define BUF_SIZE 65536
+#define MAX_CONN 5
+SOCKET clientSockets[MAX_CONN] = {INVALID_SOCKET};
 
 using json = nlohmann::json;
 
@@ -188,7 +190,6 @@ int main(int argc, char *argv[])
         const char *IP = argc == 3 ? argv[1] : nullptr;
 
         SOCKET serverSocket;
-        std::vector<SOCKET> connSockets;
 
         serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         if (serverSocket == INVALID_SOCKET)
@@ -208,19 +209,51 @@ int main(int argc, char *argv[])
         if (listen(serverSocket, SOMAXCONN) == SOCKET_ERROR)
             throw std::runtime_error("listen failed: " + std::to_string(WSAGetLastError()));
 
+        std::cout << std::format("Server listening on port {}...", port) << std::flush << std::endl;
+
         while (true)
         {
+            int slot = -1;
+            for (int i = 0; i < MAX_CONN; ++i)
+            {
+                if (clientSockets[i] == INVALID_SOCKET)
+                {
+                    slot = i;
+                    break;
+                }
+            }
+
             sockaddr_in clientAddr;
             int clientAddrSize = sizeof(clientAddr);
             SOCKET connectionSocket = accept(serverSocket, (sockaddr *)&clientAddr, &clientAddrSize);
 
             if (connectionSocket == INVALID_SOCKET)
-                throw std::runtime_error("accept failed: " + std::to_string(WSAGetLastError()));
+            {
+                std::cerr << "accept failed: " << WSAGetLastError() << std::endl;
+                continue;
+            }
 
-            std::thread thread(handleClient, connectionSocket);
-            thread.detach();
+            if (slot == -1)
+            {
+                // 没有空位，发送繁忙消息并关闭连接
+                serverMessage busyMsg(BUSY, "server", "Server busy, please try later.", "", 0);
+                sendServerMessage(connectionSocket, busyMsg);
+                closesocket(connectionSocket);
+                std::cout << "Rejected client: server busy.\n";
+                continue;
+            }
+
+            clientSockets[slot] = connectionSocket;
+            std::cout << std::format("Accepted client on slot {}, IP: {}\n", slot, inet_ntoa(clientAddr.sin_addr));
+
+            std::thread([slot, connectionSocket]()
+                        {
+                            handleClient(connectionSocket);
+                            clientSockets[slot] = INVALID_SOCKET; })
+                .detach();
         }
     }
+
     catch (const std::exception &e)
     {
         std::cerr << "Error: " << e.what() << std::endl;

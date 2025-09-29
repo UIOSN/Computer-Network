@@ -63,7 +63,7 @@ void receiveLoop(SOCKET sock, std::atomic<bool> &running)
             // 连接关闭或出错
             std::cerr << "\n[Server] Connection closed." << std::endl;
             running = false;
-            break;
+            exit(1);
         }
 
         serverMessage msg = *msgOpt;
@@ -71,6 +71,12 @@ void receiveLoop(SOCKET sock, std::atomic<bool> &running)
                                  msg.statusCode, msg.sender, msg.message, msg.filename, msg.filesize);
 
         // 处理不同类型的服务器消息
+        if (msg.statusCode == BUSY)
+        {
+            std::cerr << "\n[Server] " << msg.message << std::endl;
+            running = false;
+            exit(1);
+        }
         if (msg.statusCode == CHAT)
         {
             std::cout << "\n[Message from " << msg.sender << "] " << msg.message << std::endl;
@@ -134,6 +140,8 @@ int main(int argc, char *argv[])
             std::cout.flush();
             std::string s;
             std::getline(std::cin, s);
+            if (!running)
+                break;
             std::istringstream iss(s);
             std::string token;
             if (iss >> token)

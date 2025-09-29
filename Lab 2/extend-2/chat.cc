@@ -123,7 +123,7 @@ std::optional<serverMessage> receiveServerMessage(SOCKET sock)
     }
 }
 
-void sendClientMessage(SOCKET sock, const clientMessage &msg)
+int sendClientMessage(SOCKET sock, const clientMessage &msg)
 {
     json j;
     j["command"] = msg.command;
@@ -134,7 +134,8 @@ void sendClientMessage(SOCKET sock, const clientMessage &msg)
     j["filesize"] = msg.filesize;
 
     std::string jsonStr = j.dump() + "\n";
-    send(sock, jsonStr.c_str(), static_cast<int>(jsonStr.size()), 0);
+    int len = send(sock, jsonStr.c_str(), static_cast<int>(jsonStr.size()), 0);
+    return len;
 }
 
 void sendServerMessage(SOCKET sock, const serverMessage &msg)
