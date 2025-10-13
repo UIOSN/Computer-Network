@@ -1,4 +1,3 @@
 .vscode
 build/
-device_info.py
 *.log
