@@ -1,5 +1,8 @@
 from netmiko import ConnectHandler
+from pathlib import Path
 from device_info import router1, router2
+
+config_dir = Path(__file__).resolve().parent
 
 
 def reboot(device):
@@ -29,7 +32,7 @@ def configure_router1():
     with ConnectHandler(**router1) as net_connect:
         net_connect.find_prompt()
         print("------------------ Configuring Router 1 ------------------")
-        output = net_connect.send_config_from_file("router1.txt")
+        output = net_connect.send_config_from_file(str(config_dir / "router1.txt"))
         print(output)
 
 
@@ -37,7 +40,7 @@ def configure_router2():
     with ConnectHandler(**router2) as net_connect:
         net_connect.find_prompt()
         print("------------------ Configuring Router 2 ------------------")
-        output = net_connect.send_config_from_file("router2.txt")
+        output = net_connect.send_config_from_file(str(config_dir / "router2.txt"))
         print(output)
 
 
