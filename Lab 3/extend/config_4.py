@@ -7,7 +7,7 @@ config_dir = Path(__file__).resolve().parent
 
 def reboot(device):
     with ConnectHandler(**device) as net_connect:
-        output = net_connect.send_command("reboot fast", expect_string="System will reboot! Continue ? [y/n]:")
+        output = net_connect.send_command("reboot fast", expect_string="System will reboot! Continue \\? \\[y/n\\]:")
         output += net_connect.send_command_timing("y")
         print(output)
 
@@ -16,7 +16,7 @@ def clear_route_static(device):
     with ConnectHandler(**device) as net_connect:
         net_connect.config_mode()
         output = net_connect.send_command(
-            "undo ip route-static all", expect_string="Warning: This operation may lead to the deletion of all the public IPv4 static routes and their configurations. Continue? [Y/N]:"
+            "undo ip route-static all", expect_string="Warning: This operation may lead to the deletion of all the public IPv4 static routes and their configurations. Continue\\? \\[Y/N\\]:"
         )
         output += net_connect.send_command_timing("Y")
         print(output)
