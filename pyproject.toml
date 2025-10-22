@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "huawei"
+version = "0.0.1"
+description = "A package for configuring huawei routers and switches using netmiko"
+requires-python = ">=3.9"
+dependencies = ["netmiko"]
+
+[tool.setuptools.packages.find]
+include = ["huawei*"]
