@@ -1,0 +1,9 @@
+acl 2001
+rule permit source 192.168.1.5 0
+rule deny source 192.168.2.8 0
+quit
+display acl 2001
+interface GigabitEthernet0/0/5
+traffic-filter outbound acl 2001
+quit
+display interface

@@ -20,7 +20,8 @@ class HuaweiRouter:
             log_file = None
             if self.log_dir:
                 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-                log_file = self.log_dir / f"{self.name}_{timestamp}.log"
+                log_file = str(self.log_dir / f"{self.name}_{timestamp}.log")
+            print(log_file)
             self._net_connect = ConnectHandler(device_type=self.device_type, host=self.host, username=self.username, password=self.password, session_log=log_file)
             print(f"[INFO] Connected to {self.name} ({self.host})")
             return self

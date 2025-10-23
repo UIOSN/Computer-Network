@@ -15,10 +15,12 @@ pip install -e .
 ```python
 from huawei.device import HuaweiRouter
 from huawei.device_info import router1, router2
+from pathlib import Path
 
 if __name__ == "__main__":
-    log_directory = "logs"
-    config_file_path = "huawei_config.txt"
+    script_dir = Path(__file__).parent
+    log_directory = script_dir / "logs"
+    config_file_path = script_dir / "huawei_config.txt"
 
     with HuaweiRouter(router1, log_dir=log_directory) as router:
         router.display_routing_table()
