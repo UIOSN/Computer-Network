@@ -3,9 +3,45 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>计网Group 2</title>
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <p>Hello World!</p>
+        <div class="container">
+            <header class="header">
+                <h1>欢迎来到Group 2之家</h1>
+                <p>点击下方游戏进入体验</p>
+            </header>
+
+            <main class="games-grid">
+                <!-- 井字棋 -->
+                <a href="games/tic-tac-toe/index.html" class="game-card">
+                    <div class="game-icon">❌⭕</div>
+                    <h2>井字棋</h2>
+                    <p>经典双人策略游戏，先连成一线者胜！</p>
+                </a>
+
+                <!-- Pixel Aero -->
+                <a href="games/Pixel Aero/index.html" class="game-card">
+                    <div class="game-icon">✈️</div>
+                    <h2>像素飞行</h2>
+                    <p>在像素世界中飞行，躲避障碍！</p>
+                </a>
+
+                <!-- 示例：更多游戏 -->
+                <a href="#" class="game-card disabled">
+                    <div class="game-icon">🎯</div>
+                    <h2>打地鼠（开发中）</h2>
+                    <p>即将上线，敬请期待！</p>
+                </a>
+            </main>
+
+            <footer class="footer">
+                &copy; 计网Group 2 |
+                <a href="https://github.com/yourname" target="_blank">GitHub</a>
+            </footer>
+        </div>
+
+        <script src="script.js"></script>
     </body>
 </html>

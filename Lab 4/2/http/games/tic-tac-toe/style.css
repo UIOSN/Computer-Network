@@ -1,0 +1,162 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: #89f7fe;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#game-container {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.game-title {
+    font-size: 2.4em;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+}
+
+.board-cell {
+    aspect-ratio: 1 / 1;
+    background: #f8f9fa;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.board-cell:hover {
+    background: #fff;
+}
+
+.board-cell.filled {
+    cursor: not-allowed;
+}
+
+.board-cell img {
+    width: 85%;
+    height: 85%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.board-cell.filled img {
+    opacity: 1;
+}
+
+/* 胜利高亮 */
+.winning-cell {
+    border: 3px solid #ffd700 !important;
+    animation: pulse-glow 1.8s infinite ease-in-out;
+    z-index: 1;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 12px rgba(255, 215, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+    }
+}
+
+/* 计分板 */
+#scoreboard {
+    display: flex;
+    justify-content: space-around;
+    margin: 16px 0;
+    font-size: 1.1em;
+    color: #555;
+}
+
+.score-item {
+    background: #f1f3f5;
+    padding: 8px 16px;
+    border-radius: 12px;
+    min-width: 140px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#scoreboard :hover {
+    background: #e0e2e5;
+}
+
+#turn {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #d32f2f;
+    margin: 16px 0;
+    min-height: 28px;
+}
+
+/* 重置按钮 */
+#reset {
+    background: #6200ea;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1.1em;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#reset:hover {
+    background: #7c4dff;
+}
+
+#reset:active {
+    transform: translateY(0);
+}
+
+/* 响应式 */
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2em;
+    }
+    .board-cell {
+        width: 70px;
+        height: 70px;
+    }
+    #reset {
+        padding: 10px 24px;
+        font-size: 1em;
+    }
+}

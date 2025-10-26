@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: black;
+}
+
+.header h1 {
+    font-size: 3em;
+    font-weight: 700;
+}
+
+.header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 0 10px;
+}
+
+.game-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.game-card:hover:not(.disabled) {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.game-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.game-icon {
+    font-size: 3.5em;
+    margin-bottom: 16px;
+}
+
+.game-card h2 {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.game-card p {
+    color: #666;
+    font-size: 0.95em;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 60px;
+    color: black;
+    font-size: 0.9em;
+}
+
+.footer a {
+    color: black;
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.2em;
+    }
+    .games-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
