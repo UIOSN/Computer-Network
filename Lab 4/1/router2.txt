@@ -1,11 +1,11 @@
 sysname R2
 interface GigabitEthernet0/0/4
-ip address 192.168.3.2 24
+ip address 12.12.12.2 24
 undo shutdown
 quit
 interface GigabitEthernet0/0/5
-ip address 192.168.4.2 24
+ip address 192.168.1.2 24
 undo shutdown
 quit
-ip route-static 192.168.1.0 24 192.168.3.1
-ip route-static 192.168.2.0 24 192.168.3.1
+ip route-static 10.1.1.0 24 12.12.12.1
+ip route-static 172.17.10.0 24 12.12.12.1

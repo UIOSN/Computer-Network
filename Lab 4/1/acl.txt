@@ -1,9 +1,10 @@
-acl 2001
-rule permit source 192.168.1.5 0
-rule deny source 192.168.2.8 0
+acl 2003
+rule permit source 172.17.10.10 0
+rule permit source 10.1.1.0 0.0.0.255
+rule deny source 172.17.10.0 0.0.0.255
 quit
-display acl 2001
+display acl 2003
 interface GigabitEthernet0/0/5
-traffic-filter outbound acl 2001
+traffic-filter outbound acl 2003
 quit
 display interface

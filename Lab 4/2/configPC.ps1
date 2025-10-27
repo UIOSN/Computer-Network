@@ -3,19 +3,16 @@ $Host.UI.RawUI.WindowTitle = "网络配置工具"
 
 # ====================== 常量定义 ======================
 $PC1_MAC = "6C-B3-11-3F-CA-E8"
-$PC1_IP = "192.168.1.5"
+$PC1_IP = "172.17.10.10"
 $PC1_MASK = 24
-$PC1_GATEWAY = "192.168.1.1"
+$PC1_GATEWAY = "172.17.10.1"
 
-$PC2_MAC = "6C-B3-11-3F-CA-EB"
-$PC2_IP = "192.168.2.8"
-$PC2_MASK = 24
-$PC2_GATEWAY = "192.168.2.1"
+# $PC2_MAC = "6C-B3-11-3F-CA-EB"
 
 $PC3_MAC = "00-1B-21-57-36-5F"
-$PC3_IP = "192.168.4.22"
+$PC3_IP = "192.168.1.10"
 $PC3_MASK = 24
-$PC3_GATEWAY = "192.168.4.2"
+$PC3_GATEWAY = "192.168.1.2"
 
 $EXPERIMENT = "实验网"
 $CAMPUS = "校园网"
@@ -201,15 +198,15 @@ while ($true) {
                     }
                 }
 
-                if(!$startFTP) {
+                if (!$startFTP) {
                     # 创建新的默认FTP站点
                     $ftpRoot = Join-Path $scriptDir "ftp"
                     try {
                         New-WebFtpSite -Name $FTP_NAME -Port 21 -PhysicalPath $ftpRoot -ErrorAction Stop
 
                         # 启用匿名身份验证和基本身份验证
-                        Set-WebConfiguration "/system.applicationHost/sites/site[@name='$FTP_NAME']/ftpServer/security/authentication/anonymousAuthentication" -Value @{enabled="True"}
-                        Set-WebConfiguration "/system.applicationHost/sites/site[@name='$FTP_NAME']/ftpServer/security/authentication/basicAuthentication" -Value @{enabled="True"}
+                        Set-WebConfiguration "/system.applicationHost/sites/site[@name='$FTP_NAME']/ftpServer/security/authentication/anonymousAuthentication" -Value @{enabled = "True" }
+                        Set-WebConfiguration "/system.applicationHost/sites/site[@name='$FTP_NAME']/ftpServer/security/authentication/basicAuthentication" -Value @{enabled = "True" }
                         # 禁用SSL
                         Set-WebConfiguration "/system.applicationHost/sites/site[@name='$FTP_NAME']/ftpServer/security/ssl" -Value @{
                             controlChannelPolicy = "SslAllow"
