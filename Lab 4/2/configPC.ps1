@@ -17,8 +17,8 @@ $PC3_GATEWAY = "192.168.1.2"
 $EXPERIMENT = "实验网"
 $CAMPUS = "校园网"
 
-$WEBSITE_NAME = "Default Web Site"
-$FTP_NAME = "Default FTP Site"
+$WEBSITE_NAME = "Group2_Website"
+$FTP_NAME = "Group2_FTP"
 # =====================================================
 
 function Show-Menu {
@@ -217,8 +217,8 @@ while ($true) {
 
                         # 设置权限
                         $acl = Get-Acl $ftpRoot
-                        $accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS_IUSRS", "ReadAndExecute, Synchronize, Write", "ContainerInherit,ObjectInherit", "None", "Allow")
-                        $accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule("IUSR", "ReadAndExecute, Synchronize, Write", "ContainerInherit,ObjectInherit", "None", "Allow")
+                        $accessRule1 = New-Object System.Security.AccessControl.FileSystemAccessRule("IIS_IUSRS", "Read, Synchronize, Write", "ContainerInherit,ObjectInherit", "None", "Allow")
+                        $accessRule2 = New-Object System.Security.AccessControl.FileSystemAccessRule("IUSR", "Read, Synchronize, Write", "ContainerInherit,ObjectInherit", "None", "Allow")
                         $acl.AddAccessRule($accessRule1)
                         $acl.AddAccessRule($accessRule2)
                         Set-Acl $ftpRoot $acl
