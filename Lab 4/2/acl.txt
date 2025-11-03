@@ -1,5 +1,6 @@
 acl 3002
 rule permit tcp destination-port eq www source 172.17.10.0 0.0.0.255 destination 192.168.1.10 0
+rule permit icmp source 172.17.10.0 0.0.0.255 destination 12.12.12.2 0
 rule deny tcp destination-port eq ftp source 172.17.10.0 0.0.0.255 destination 192.168.1.10 0
 rule deny tcp destination-port eq ftp-data source 172.17.10.0 0.0.0.255 destination 192.168.1.10 0
 rule deny tcp destination-port eq telnet source 172.17.10.0 0.0.0.255 destination 12.12.12.2 0
