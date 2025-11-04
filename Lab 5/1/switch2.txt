@@ -1,0 +1,10 @@
+sysname SwitchB
+vlan batch 20
+interface GigabitEthernet0/0/5
+port link-type access
+port default vlan 20
+quit
+interface GigabitEthernet0/0/24
+port link-type trunk
+port trunk allow-pass vlan all
+quit

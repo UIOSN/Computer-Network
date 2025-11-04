@@ -1,10 +1,19 @@
 from netmiko import ConnectHandler
 from datetime import datetime
 from pathlib import Path
+from typing import TypedDict
+
+
+class Device(TypedDict):
+    alias: str
+    device_type: str
+    host: str
+    username: str
+    password: str
 
 
 class HuaweiRouter:
-    def __init__(self, device: dict, log_dir: str | Path = None):
+    def __init__(self, device: Device, log_dir: str | Path = None):
         self.device_type = device["device_type"]
         self.host = device["host"]
         self.username = device["username"]
@@ -61,4 +70,54 @@ class HuaweiRouter:
             raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
         print(f"[INFO] Applying configuration from {config_file} to {self.name} ({self.host})")
         output = self._net_connect.send_config_from_file(config_file)
+        print(output)
+
+
+class HuaweiSwitch:
+    def __init__(self, device: Device, log_dir: str | Path = None):
+        self.device_type = device["device_type"]
+        self.host = device["host"]
+        self.username = device["username"]
+        self.password = device["password"]
+        self.name = device["alias"]
+        self.log_dir = Path(log_dir) if log_dir else None
+        if self.log_dir:
+            self.log_dir.mkdir(parents=True, exist_ok=True)
+        self._net_connect = None
+
+    def __enter__(self):
+        try:
+            log_file = None
+            if self.log_dir:
+                timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+                log_file = str(self.log_dir / f"{self.name}_{timestamp}.log")
+            print(log_file)
+            self._net_connect = ConnectHandler(device_type=self.device_type, host=self.host, username=self.username, password=self.password, session_log=log_file)
+            print(f"[INFO] Connected to {self.name} ({self.host})")
+            return self
+        except Exception as e:
+            raise ConnectionError(f"Failed to connect to {self.name} ({self.host}): {e}")
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self._net_connect:
+            self._net_connect.disconnect()
+            print(f"[INFO] Disconnected from {self.name} ({self.host})")
+
+    def configure(self, config_file: str | Path):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        print(f"[INFO] Applying configuration from {config_file} to {self.name} ({self.host})")
+        output = self._net_connect.send_config_from_file(config_file)
+        print(output)
+
+    def display_vlan(self, id: int):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        output = self._net_connect.send_command(f"display vlan {id}")
+        print(output)
+
+    def display_port_vlan(self):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        output = self._net_connect.send_command(f"display port vlan")
         print(output)

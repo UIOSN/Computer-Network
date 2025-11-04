@@ -1,0 +1,18 @@
+sysname EdgeS
+vlan batch 10 20 30
+interface GigabitEthernet0/0/1
+port link-type access
+port default vlan 30
+quit
+interface GigabitEthernet0/0/2
+port link-type access
+port default vlan 10
+quit
+interface GigabitEthernet0/0/3
+port link-type access
+port default vlan 20
+quit
+interface GigabitEthernet0/0/4
+port link-type trunk
+port trunk allow-pass vlan all
+quit

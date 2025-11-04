@@ -1,0 +1,24 @@
+sysname Router
+interface GigabitEthernet0/0/0.10
+dot1q termination vid 10
+ip address 192.168.10.1 255.255.255.0
+arp broadcast enable
+quit
+interface GigabitEthernet0/0/0.20
+dot1q termination vid 20
+ip address 192.168.20.1 255.255.255.0
+arp broadcast enable
+quit
+interface GigabitEthernet0/0/1
+ip address 192.168.56.1 255.255.255.0
+quit
+acl 3001
+rule permit ip destination 192.168.56.234 0
+rule deny ip source 192.168.56.0 0.0.0.255 destination 192.168.56.0 0.0.0.255
+quit
+interface GigabitEthernet0/0/0.10
+traffic-filter outbound acl 3001
+quit
+interface GigabitEthernet0/0/0.20
+traffic-filter outbound acl 3001
+quit
