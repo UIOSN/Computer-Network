@@ -1,18 +1,39 @@
-sysname EdgeS
-vlan batch 10 20 30
-interface GigabitEthernet0/0/1
-port link-type access
-port default vlan 30
+sysname Router
+dhcp enable
+ip pool vlan100
+network 192.168.100.0 mask 255.255.255.0
+gateway-list 192.168.100.1
 quit
-interface GigabitEthernet0/0/2
-port link-type access
-port default vlan 10
+ip pool vlan200
+network 192.168.200.0 mask 255.255.255.0
+gateway-list 192.168.200.1
 quit
-interface GigabitEthernet0/0/3
-port link-type access
-port default vlan 20
+acl number 2003
+rule permit source 192.168.100.0 0.0.0.255
+rule permit source 192.168.200.0 0.0.0.255
 quit
-interface GigabitEthernet0/0/4
-port link-type trunk
-port trunk allow-pass vlan all
+acl number 3003
+rule deny ip source 192.168.100.0 0.0.0.255 destination 192.168.200.0 0.0.0.255
+rule deny ip source 192.168.200.0 0.0.0.255 destination 192.168.100.0 0.0.0.255
+rule permit ip
+quit
+interface GigabitEthernet0/0/0.100
+dot1q termination vid 100
+ip address 192.168.100.1 255.255.255.0
+arp broadcast enable
+dhcp select global
+traffic-filter inbound acl 3003
+quit
+interface GigabitEthernet0/0/0.200
+dot1q termination vid 200
+ip address 192.168.200.1 255.255.255.0
+arp broadcast enable
+dhcp select global
+traffic-filter inbound acl 3003
+quit
+interface GigabitEthernet0/0/0.20
+dot1q termination vid 20
+ip address 192.168.20.1 255.255.255.0
+arp broadcast enable
+nat outbound 2003
 quit

@@ -1,4 +1,4 @@
-sysname S1
+sysname S2
 vlan 10
 description IPTV
 quit
@@ -17,13 +17,17 @@ port trunk allow-pass vlan all
 quit
 interface GigabitEthernet0/0/2
 port link-type access
-port default vlan 100
+port default vlan 10
 quit
 interface GigabitEthernet0/0/3
 port link-type access
-port default vlan 20
+port default vlan 100
 quit
 interface GigabitEthernet0/0/4
 port link-type access
-port default vlan 10
+port default vlan 200
+quit
+interface GigabitEthernet0/0/5
+port link-type trunk
+port trunk allow-pass vlan 20 100 200
 quit
