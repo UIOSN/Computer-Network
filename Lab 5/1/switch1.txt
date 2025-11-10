@@ -1,4 +1,3 @@
-sysname SwitchA
 vlan batch 10 20
 interface GigabitEthernet0/0/5
 port link-type access

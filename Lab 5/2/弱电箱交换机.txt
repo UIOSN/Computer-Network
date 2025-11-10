@@ -1,29 +1,28 @@
-sysname S1
-vlan 10
+vlan 11
 description IPTV
 quit
-vlan 20
+vlan 21
 description internet
 quit
-vlan 100
+vlan 101
 description room1&room2
 quit
-vlan 200
+vlan 201
 description room3
 quit
-interface GigabitEthernet0/0/1
+interface GigabitEthernet0/0/24
 port link-type trunk
 port trunk allow-pass vlan all
 quit
-interface GigabitEthernet0/0/2
+interface GigabitEthernet0/0/5
 port link-type access
-port default vlan 100
+port default vlan 101
 quit
-interface GigabitEthernet0/0/3
+interface GigabitEthernet0/0/10
 port link-type access
-port default vlan 20
+port default vlan 21
 quit
 interface GigabitEthernet0/0/4
 port link-type access
-port default vlan 10
+port default vlan 11
 quit

@@ -1,4 +1,5 @@
-from huawei import switch1, switch2, HuaweiSwitch
+from huawei.device_info import switch1, switch2
+from huawei.device import HuaweiSwitch
 from pathlib import Path
 
 if __name__ == "__main__":

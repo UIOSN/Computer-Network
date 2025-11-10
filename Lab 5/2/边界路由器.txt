@@ -1,39 +1,38 @@
-sysname Router
 dhcp enable
-ip pool vlan100
-network 192.168.100.0 mask 255.255.255.0
-gateway-list 192.168.100.1
+ip pool vlan101
+network 192.168.101.0 mask 255.255.255.0
+gateway-list 192.168.101.1
 quit
-ip pool vlan200
-network 192.168.200.0 mask 255.255.255.0
-gateway-list 192.168.200.1
+ip pool vlan201
+network 192.168.201.0 mask 255.255.255.0
+gateway-list 192.168.201.1
 quit
 acl number 2003
-rule permit source 192.168.100.0 0.0.0.255
-rule permit source 192.168.200.0 0.0.0.255
+rule permit source 192.168.101.0 0.0.0.255
+rule permit source 192.168.201.0 0.0.0.255
 quit
 acl number 3003
-rule deny ip source 192.168.100.0 0.0.0.255 destination 192.168.200.0 0.0.0.255
-rule deny ip source 192.168.200.0 0.0.0.255 destination 192.168.100.0 0.0.0.255
+rule deny ip source 192.168.101.0 0.0.0.255 destination 192.168.201.0 0.0.0.255
+rule deny ip source 192.168.201.0 0.0.0.255 destination 192.168.101.0 0.0.0.255
 rule permit ip
 quit
-interface GigabitEthernet0/0/0.100
-dot1q termination vid 100
-ip address 192.168.100.1 255.255.255.0
+interface GigabitEthernet0/0/0.101
+dot1q termination vid 101
+ip address 192.168.101.1 255.255.255.0
 arp broadcast enable
 dhcp select global
 traffic-filter inbound acl 3003
 quit
-interface GigabitEthernet0/0/0.200
-dot1q termination vid 200
-ip address 192.168.200.1 255.255.255.0
+interface GigabitEthernet0/0/0.201
+dot1q termination vid 201
+ip address 192.168.201.1 255.255.255.0
 arp broadcast enable
 dhcp select global
 traffic-filter inbound acl 3003
 quit
-interface GigabitEthernet0/0/0.20
-dot1q termination vid 20
-ip address 192.168.20.1 255.255.255.0
+interface GigabitEthernet0/0/0.21
+dot1q termination vid 21
+ip address 192.168.21.1 255.255.255.0
 arp broadcast enable
 nat outbound 2003
 quit
