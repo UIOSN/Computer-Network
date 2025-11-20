@@ -1,0 +1,22 @@
+dhcp enable
+ip pool net3
+network 192.168.3.0 mask 255.255.255.0
+gateway-list 192.168.3.1
+quit
+observe-port interface GigabitEthernet 0/0/2
+interface GigabitEthernet0/0/0
+ip address 192.168.2.2 24
+mirror to observe-port inbound
+quit
+interface GigabitEthernet0/0/1
+ip address 192.168.3.1 24
+dhcp select global
+mirror to observe-port inbound
+quit
+router id 2.2.2.2
+ospf
+area 0
+network 192.168.2.0 0.0.0.255
+network 192.168.3.0 0.0.0.255
+quit
+quit
