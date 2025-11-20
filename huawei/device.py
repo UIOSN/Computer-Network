@@ -65,11 +65,24 @@ class HuaweiRouter:
         output = self._net_connect.send_command("display ip routing-table")
         print(output)
 
+    def sysname(self, name: str):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        self._net_connect.config_mode()
+        output = self._net_connect.send_command(f"sysname {name}")
+        print(output)
+
     def configure(self, config_file: str | Path):
         if not self._net_connect:
             raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
         print(f"[INFO] Applying configuration from {config_file} to {self.name} ({self.host})")
         output = self._net_connect.send_config_from_file(config_file)
+        print(output)
+
+    def send_commands(self, command: str | list[str]):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        output = self._net_connect.send_config_set(command)
         print(output)
 
 
@@ -110,6 +123,13 @@ class HuaweiSwitch:
         output = self._net_connect.send_config_from_file(config_file)
         print(output)
 
+    def sysname(self, name: str):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        self._net_connect.config_mode()
+        output = self._net_connect.send_command(f"sysname {name}")
+        print(output)
+
     def display_vlan(self, id: int):
         if not self._net_connect:
             raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
@@ -120,4 +140,10 @@ class HuaweiSwitch:
         if not self._net_connect:
             raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
         output = self._net_connect.send_command(f"display port vlan")
+        print(output)
+
+    def send_commands(self, command: str | list[str]):
+        if not self._net_connect:
+            raise RuntimeError("Not connected to the device. Use 'with' statement to manage connection.")
+        output = self._net_connect.send_config_set(command)
         print(output)
