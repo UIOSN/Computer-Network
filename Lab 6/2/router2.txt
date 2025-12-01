@@ -1,0 +1,25 @@
+dhcp enable
+ip pool net2
+network 192.168.2.0 mask 255.255.255.0
+gateway-list 192.168.2.1
+quit
+interface GigabitEthernet0/0/5
+ip address 192.168.12.2 24
+ospf authentication-mode simple plain 111111
+quit
+interface GigabitEthernet0/0/6
+ip address 192.168.24.1 24
+ospf authentication-mode simple plain 111111
+quit
+interface GigabitEthernet0/0/7
+ip address 192.168.2.1 24
+dhcp select global
+quit
+router id 2.2.2.2
+ospf
+area 0
+network 192.168.12.0 0.0.0.255
+network 192.168.24.0 0.0.0.255
+network 192.168.2.0 0.0.0.255
+quit
+quit
