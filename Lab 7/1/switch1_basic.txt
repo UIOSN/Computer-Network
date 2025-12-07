@@ -1,0 +1,12 @@
+vlan 10
+name sales
+quit
+interface GigabitEthernet0/0/3
+port link-type access
+port default vlan 10
+quit
+port-group pg1
+group-member GigabitEthernet0/0/1 to GigabitEthernet0/0/2
+port link-type trunk
+port trunk allow-pass vlan 10
+quit
